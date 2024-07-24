@@ -3,12 +3,6 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ["id", "first_name", "last_name", "email"]
-
-
-class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, write_only=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -37,6 +31,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             user = CustomUser(email=email, first_name=first_name, last_name=last_name)
             user.set_password(password)
             user.save()
-            return
+            return user
         else:
             raise serializers.ValidationError("Passwords do not match")
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'password')
