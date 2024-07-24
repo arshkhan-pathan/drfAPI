@@ -1,12 +1,7 @@
-
-from django.urls import include, path
-from rest_framework import routers
-from tasks.views import TaskViewSet
-
-# Create a router and register our viewsets with it.
-router = routers.DefaultRouter()
-router.register(r'', TaskViewSet)
+from django.urls import path
+from tasks.views import TaskCreateListApiView, TaskUpdateDeleteApiView
 
 urlpatterns = [
-    path('', include(router.urls))
-    ]
+    path('', TaskCreateListApiView.as_view(), name='task-list'),
+    path('<int:pk>/', TaskUpdateDeleteApiView.as_view(), name='task'),
+]
