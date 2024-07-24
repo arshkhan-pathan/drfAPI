@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserRegisterSerializer
 from rest_framework.views import APIView
+
 
 class UserListView(APIView):
     authentication_classes = []
@@ -14,10 +15,12 @@ class UserListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
+        serializer = UserRegisterSerializer(data=request.data)
         print("Serializer Created", serializer.is_valid(raise_exception=True))
         if serializer.is_valid():
+            print("Serializer Valid")
             user = serializer.save()
+            print("User Created", user)
             response_data = {
                 'user': {
                     'id': user.id,
