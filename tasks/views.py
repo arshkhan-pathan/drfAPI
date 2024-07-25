@@ -8,6 +8,7 @@ from tasks.models import Tasks
 from tasks.serializers import TasksSerializer
 from tasks.permissions import IsOwner
 
+
 class TaskCreateListApiView(APIView):
     permission_classes = [IsAuthenticated]
 
