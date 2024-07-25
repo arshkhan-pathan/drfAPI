@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -36,7 +36,6 @@ class TaskUpdateDeleteApiView(APIView):
     def put(self, request, pk=None):
         task = get_object_or_404(Tasks, pk=pk, created_by=request.user)
         serializer = TasksSerializer(task, data=request.data)
-        print("serializer", serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

@@ -18,7 +18,6 @@ class UserListView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            print("Serializer Valid")
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
             refresh_token = str(refresh)
